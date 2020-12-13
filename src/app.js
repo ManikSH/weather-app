@@ -4,6 +4,8 @@ let app = express();
 let hbs = require("hbs");
 let location = require("./utils/app.js");
 
+let port = process.env.PORT || 3000;
+
 let publicDirPath = path.join(__dirname, "../public");
 app.use(express.static(publicDirPath));
 
@@ -21,57 +23,15 @@ app.get("", (req, res) => {
   });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.get("/weather", (req, res) => {
   if (req.query.location) {
-      location(req.query.location, (tempInDeg) => {
-            res.send({ location: req.query.location, temperature: tempInDeg });
-      });
+    location(req.query.location, (tempInDeg) => {
+      res.send({ location: req.query.location, temperature: tempInDeg });
+    });
   } else {
     res.send("Enter location address");
   }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 app.get("/help", (req, res) => {
   res.render("help", {
@@ -95,6 +55,6 @@ app.get("*", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("Server is up at port 3000");
+app.listen(port, () => {
+  console.log("Server is up at port " + port);
 });
